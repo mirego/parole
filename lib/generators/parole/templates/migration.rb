@@ -3,7 +3,7 @@ class AddParole < ActiveRecord::Migration
     create_table :comments do |t|
       t.references :commentable, polymorphic: true
       t.references :commenter, polymorphic: true
-      t.string :role, default: 'comment'
+      t.string :role
       t.text :comment
 
       t.timestamps
