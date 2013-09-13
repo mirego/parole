@@ -9,8 +9,8 @@ require 'parole/comment'
 class ActiveRecord::Base
   def self.acts_as_commentable(options = {})
     class_attribute :commentable_options
-    commentable_options = options.reverse_merge(roles: [])
-    commentable_options[:roles] = commentable_options[:roles].map(&:to_s)
+    self.commentable_options = options.reverse_merge(roles: [])
+    self.commentable_options[:roles] = commentable_options[:roles].map(&:to_s)
 
     include Parole::Commentable
   end

@@ -2,7 +2,7 @@ module ModelMacros
   # Create a new commentable model
   def spawn_commentable_model(klass_name = 'Article', &block)
     spawn_model klass_name, ActiveRecord::Base do
-      acts_as_commentable
+      acts_as_commentable unless block
       instance_exec(&block) if block
     end
   end
@@ -10,7 +10,7 @@ module ModelMacros
   # Create a new comment model
   def spawn_comment_model(klass_name = 'Comment', &block)
     spawn_model klass_name, ActiveRecord::Base do
-      acts_as_comment
+      acts_as_comment unless block
       instance_exec(&block) if block
     end
   end
@@ -18,7 +18,7 @@ module ModelMacros
   # Create a new commenter model
   def spawn_commenter_model(klass_name = 'User', &block)
     spawn_model klass_name, ActiveRecord::Base do
-      has_many :comments
+      has_many :comments unless block
       instance_exec(&block) if block
     end
   end

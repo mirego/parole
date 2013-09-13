@@ -3,11 +3,16 @@ module Parole
     extend ActiveSupport::Concern
 
     included do
+      # Associations
       belongs_to :commentable, polymorphic: true
       belongs_to :commenter, polymorphic: true
 
+      # Callbacks
       after_create :update_cache_counters
       after_destroy :update_cache_counters
+
+      # Validations
+      validate :ensure_valid_role_for_commentable
     end
 
   protected
@@ -24,6 +29,16 @@ module Parole
       end
 
       commentable.save(validate: false)
+    end
+
+    def ensure_valid_role_for_commentable
+      allowed_roles = commentable.class.commentable_options[:roles]
+
+      if allowed_roles.any?
+        errors.add(:role, :invalid) unless allowed_roles.include?(self.role)
+      else
+        errors.add(:role, :invalid) unless self.role.blank?
+      end
     end
   end
 end
