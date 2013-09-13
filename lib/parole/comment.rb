@@ -13,6 +13,10 @@ module Parole
 
       # Validations
       validate :ensure_valid_role_for_commentable
+      validate :ensure_valid_commentable
+      validate :commenter, presence: true
+      validate :commentable, presence: true
+      validate :comment, presence: true
     end
 
   protected
@@ -39,6 +43,11 @@ module Parole
       else
         errors.add(:role, :invalid) unless self.role.blank?
       end
+    end
+
+    def ensure_valid_commentable
+      klass = commentable.class
+      errors.add(:commentable, :invalid) unless klass.respond_to?(:acts_as_commentable?) && klass.acts_as_commentable?
     end
   end
 end
