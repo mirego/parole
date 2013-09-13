@@ -1,10 +1,16 @@
-# Parole
+<p align="center">
+  <a href="https://github.com/mirego/parole">
+    <img src="http://i.imgur.com/QQlNfGL.png" alt="Parole" />
+  </a>
+  <br />
+  Parole adds the ability to comment on ActiveRecord records.
+  <br /><br />
+  <a href="https://rubygems.org/gems/parole"><img src="https://badge.fury.io/rb/parole.png" /></a>
+  <a href="https://codeclimate.com/github/mirego/parole"><img src="https://codeclimate.com/github/mirego/parole.png" /></a>
+  <a href="https://travis-ci.org/mirego/parole"><img src="https://travis-ci.org/mirego/parole.png?branch=master" /></a>
+</p>
 
-[![Gem Version](https://badge.fury.io/rb/parole.png)](https://rubygems.org/gems/parole)
-[![Code Climate](https://codeclimate.com/github/mirego/parole.png)](https://codeclimate.com/github/mirego/parole)
-[![Build Status](https://travis-ci.org/mirego/parole.png?branch=master)](https://travis-ci.org/mirego/parole)
-
-Parole adds the ability to comment on ActiveRecord records.
+---
 
 ## Installation
 
