@@ -6,6 +6,5 @@ rvm:
 
 gemfile:
   - gemfiles/Gemfile.activerecord-4.0
-  - gemfiles/Gemfile.activerecord-3.2.x
 
 script: "echo 'DO IT' && bundle exec rake spec"
