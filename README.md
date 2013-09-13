@@ -60,6 +60,8 @@ if there’s a `<role>_comments_count` column and/or a `comments_count` column. 
 them so they reflect the total number of comments and the number of comments of this role for
 the record.
 
+So let’s say the `Article` model has the following columns: `photos_comments_count`, `videos_comments_count` and `comments_count`.
+
 ```ruby
 class Article < ActiveRecord::Base
   acts_as_commentable roles: [:photos, :videos]
