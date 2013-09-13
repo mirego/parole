@@ -19,6 +19,7 @@ describe Parole::Commentable do
     context 'without role attribute' do
       let(:comment) { commentable.comments.create(commenter: commenter, comment: 'Booya') }
 
+      it { expect(comment).to be_persisted }
       it { expect(comment.comment).to eql 'Booya' }
       it { expect(comment.commenter).to eql commenter }
       it { expect(comment.commentable).to eql commentable }
