@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Parole::VERSION
   spec.authors       = ['Rémi Prévost']
   spec.email         = ['rprevost@mirego.com']
-  spec.description   = ''
-  spec.summary       = ''
-  spec.homepage      = ''
+  spec.description   = 'Parole adds the ability to comment on ActiveRecord models.'
+  spec.summary       = spec.description
+  spec.homepage      = 'http://open.mirego.com/parole'
   spec.license       = 'BSD 3-Clause'
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
+
+  spec.add_dependency 'activerecord', '>= 4.0.0'
+  spec.add_dependency 'activesupport', '>= 4.0.0'
 end
