@@ -4,7 +4,7 @@ module Parole
 
     included do
       # Default options for all comments associations
-      association_options = { polymorphic: true, class_name: 'Comment', as: :commentable, dependent: :destroy }
+      association_options = { class_name: 'Comment', as: :commentable, dependent: :destroy }
 
       # All comments for the record
       has_many :comments, association_options
