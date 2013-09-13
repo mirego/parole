@@ -21,6 +21,10 @@ module Parole
 
   protected
 
+    # Update the commentable cache counter columns
+    #
+    # Look for a `<role>_comments_count` and a `comments_count` column
+    # in the commentable model and update their value with the count.
     def update_cache_counters
       role_method = :"#{self.role}_comments_count="
       if commentable.respond_to?(role_method)
@@ -35,6 +39,8 @@ module Parole
       commentable.save(validate: false)
     end
 
+    # Make sure that the value of the `role` attribute is a valid role
+    # for the commentable.
     def ensure_valid_role_for_commentable
       allowed_roles = commentable.class.commentable_options[:roles]
 
@@ -45,6 +51,8 @@ module Parole
       end
     end
 
+    # Make sure that the record we're commenting on is an instance
+    # of a commentable model.
     def ensure_valid_commentable
       klass = commentable.class
       errors.add(:commentable, :invalid) unless klass.respond_to?(:acts_as_commentable?) && klass.acts_as_commentable?
