@@ -14,6 +14,9 @@ RSpec.configure do |config|
   config.include ModelMacros
 
   config.before(:each) do
+    # Reset our commentable classes
+    Parole.instance_variable_set(:@commentable_classes, nil)
+
     # Create the SQLite database
     setup_database
 

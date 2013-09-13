@@ -8,6 +8,8 @@ require 'parole/comment'
 
 class ActiveRecord::Base
   def self.acts_as_commentable(options = {})
+    Parole.commentable_classes << self
+
     class_attribute :commentable_options, :acts_as_commentable
     self.acts_as_commentable = true
     self.commentable_options = options.reverse_merge(roles: [])
@@ -22,5 +24,11 @@ class ActiveRecord::Base
 
   def self.acts_as_comment(*args)
     include Parole::Comment
+  end
+end
+
+module Parole
+  def self.commentable_classes
+    @commentable_classes ||= []
   end
 end
