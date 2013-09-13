@@ -1,6 +1,8 @@
 # Parole
 
 [![Gem Version](https://badge.fury.io/rb/parole.png)](https://rubygems.org/gems/parole)
+[![Code Climate](https://codeclimate.com/github/mirego/parole.png)](https://codeclimate.com/github/mirego/parole)
+[![Build Status](https://travis-ci.org/mirego/parole.png?branch=master)](https://travis-ci.org/mirego/parole)
 
 Parole adds the ability to comment on ActiveRecord records.
 
