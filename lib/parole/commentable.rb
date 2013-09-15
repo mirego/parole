@@ -11,8 +11,7 @@ module Parole
 
       # Role-specific comments for the record
       commentable_options.fetch(:roles).each do |role|
-        options = association_options.merge before_add: lambda { |_, comment| comment.role = role }
-        has_many :"#{role}_comments", lambda { where(role: role) }, options
+        has_many :"#{role}_comments", lambda { where(role: role) }, association_options
       end
     end
   end
