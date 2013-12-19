@@ -110,4 +110,23 @@ describe Parole::Comment do
       it { expect { create_comment! }.to change { commentable.reload.comments_count }.from(0).to(1) }
     end
   end
+
+  describe :ensure_valid_role_for_commentable do
+    before do
+      spawn_comment_model
+      spawn_commenter_model 'User'
+
+      run_migration do
+        create_table(:users, force: true)
+      end
+    end
+
+    let(:commenter) { User.create }
+
+    context 'without associated commentable' do
+      let(:comment) { Comment.new(commenter: commenter, comment: 'Booya') }
+
+      it { expect { comment.valid? }.to_not raise_error }
+    end
+  end
 end
