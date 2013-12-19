@@ -14,9 +14,9 @@ module Parole
       # Validations
       validate :ensure_valid_role_for_commentable
       validate :ensure_valid_commentable
-      validate :commenter, presence: true
-      validate :commentable, presence: true
-      validate :comment, presence: true
+      validates :commenter, presence: true
+      validates :commentable, presence: true
+      validates :comment, presence: true
     end
 
   protected
