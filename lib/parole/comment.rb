@@ -12,7 +12,7 @@ module Parole
       after_destroy :update_cache_counters
 
       # Validations
-      validate :ensure_valid_role_for_commentable
+      validate :ensure_valid_role_for_commentable, if: lambda { commentable.present? && commentable.commentable? }
       validate :ensure_valid_commentable
       validates :commenter, presence: true
       validates :commentable, presence: true
@@ -57,8 +57,7 @@ module Parole
     # Make sure that the record we're commenting on is an instance
     # of a commentable model.
     def ensure_valid_commentable
-      klass = commentable.class
-      errors.add(:commentable, :invalid) unless klass.respond_to?(:acts_as_commentable?) && klass.acts_as_commentable?
+      errors.add(:commentable, :invalid) unless commentable.respond_to?(:commentable?) && commentable.commentable?
     end
   end
 end

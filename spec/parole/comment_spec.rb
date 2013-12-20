@@ -1,6 +1,44 @@
 require 'spec_helper'
 
 describe Parole::Comment do
+  describe :Validations do
+    before do
+      spawn_comment_model
+      spawn_commenter_model 'User'
+      spawn_commentable_model 'Article'
+
+      run_migration do
+        create_table(:users, force: true)
+        create_table(:articles, force: true)
+      end
+    end
+
+    let(:errors) do
+      subject.valid?
+      subject.errors.full_messages
+    end
+
+    describe :validates_comment do
+      subject { Comment.new }
+      it { expect(errors).to include("Comment can't be blank") }
+    end
+
+    describe :validates_commenter_presence do
+      subject { Comment.new }
+      it { expect(errors).to include("Commenter can't be blank") }
+    end
+
+    describe :validates_commentable_presence do
+      subject { Comment.new }
+      it { expect(errors).to include("Commentable can't be blank") }
+    end
+
+    describe :validates_commentable do
+      subject { Comment.new(commentable: User.new) }
+      it { expect(errors).to include("Commentable is invalid") }
+    end
+  end
+
   describe :ClassMethods do
     describe :create do
       context 'through general `comments` association' do
