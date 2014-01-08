@@ -45,7 +45,6 @@ module Parole
     # If the commentable doesn't have any comment roles, we make sure
     # that the value is blank.
     def ensure_valid_role_for_commentable
-      return unless commentable
       allowed_roles = commentable.class.commentable_options[:roles]
 
       if allowed_roles.any?
