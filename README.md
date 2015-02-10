@@ -91,7 +91,7 @@ article.comments_count # => 2
 
 ## License
 
-`Parole` is © 2013 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/parole/blob/master/LICENSE.md) file.
+`Parole` is © 2013-2015 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/parole/blob/master/LICENSE.md) file.
 
 ## About Mirego
 
