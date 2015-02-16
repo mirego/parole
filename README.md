@@ -5,10 +5,11 @@
   <br />
   Parole adds the ability to comment on ActiveRecord records.
   <br /><br />
-  <a href="https://rubygems.org/gems/parole"><img src="https://badge.fury.io/rb/parole.png" /></a>
-  <a href="https://codeclimate.com/github/mirego/parole"><img src="https://codeclimate.com/github/mirego/parole.png" /></a>
-  <a href="https://travis-ci.org/mirego/parole"><img src="https://travis-ci.org/mirego/parole.png?branch=master" /></a>
+  <a href="https://rubygems.org/gems/parole"><img src="http://img.shields.io/gem/v/parole.svg" /></a>
+  <a href="https://codeclimate.com/github/mirego/parole"><img src="http://img.shields.io/codeclimate/github/mirego/parole.svg" /></a>
+  <a href="https://travis-ci.org/mirego/parole"><img src="http://img.shields.io/travis/mirego/parole.svg" /></a>
 </p>
+
 
 ---
 
