@@ -6,7 +6,7 @@ class AddParole < ActiveRecord::Migration
       t.string :role
       t.text :comment
 
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :comments, [:commentable_type, :commentable_id, :role]
