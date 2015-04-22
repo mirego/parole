@@ -124,13 +124,19 @@ describe Parole::Comment do
     describe :update_cache_counters do
       before do
         spawn_comment_model
-        spawn_commenter_model 'User'
+        spawn_commenter_model 'User' do
+          has_many :comments, -> { where(commenter_type: 'User') }, foreign_key: :commenter_id
+        end
         spawn_commentable_model 'Article' do
           acts_as_commentable roles: [:photos, :videos]
         end
 
         run_migration do
-          create_table(:users, force: true)
+          create_table(:users, force: true) do |t|
+            t.integer :photos_comments_count, default: 0
+            t.integer :videos_comments_count, default: 0
+            t.integer :comments_count, default: 0
+          end
           create_table(:articles, force: true) do |t|
             t.integer :photos_comments_count, default: 0
             t.integer :videos_comments_count, default: 0
@@ -143,9 +149,15 @@ describe Parole::Comment do
       let(:commentable) { Article.create }
       let(:create_comment!) { commentable.photos_comments.create(commenter: commenter, comment: 'Booya') }
 
+      # Commentable cache counter
       it { expect { create_comment! }.to change { commentable.reload.photos_comments_count }.from(0).to(1) }
       it { expect { create_comment! }.to_not change { commentable.reload.videos_comments_count } }
       it { expect { create_comment! }.to change { commentable.reload.comments_count }.from(0).to(1) }
+
+      # Commenter cache counter
+      it { expect { create_comment! }.to change { commenter.reload.photos_comments_count }.from(0).to(1) }
+      it { expect { create_comment! }.to_not change { commenter.reload.videos_comments_count } }
+      it { expect { create_comment! }.to change { commenter.reload.comments_count }.from(0).to(1) }
     end
   end
 

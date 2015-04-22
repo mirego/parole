@@ -64,16 +64,22 @@ article.comments.count # => 1
 
 ### Cache counters
 
-Whenever a comment is created or destroyed, Parole looks into the commentable record and check
-if there’s a `<role>_comments_count` column and/or a `comments_count` column. If so, it updates
-them so they reflect the total number of comments and the number of comments of this role for
-the record.
+Whenever a comment is created or destroyed, Parole looks into the commentable record and the commenter
+record and check if there’s a `<role>_comments_count` column and/or a `comments_count` column.
+If so, it updates them so they reflect the total number of comments and the number of comments
+of this role for the record.
 
-So let’s say the `Article` model has the following columns: `photos_comments_count`, `videos_comments_count` and `comments_count`.
+_Note:_ The commenter model must implements a `has_many` relationship that fetch its comments.
+
+So let’s say the `Article` model has the following columns: `photos_comments_count`, `videos_comments_count` and `comments_count`,
+and the `User` model has the following column: `comments_count`.
 
 ```ruby
 class Article < ActiveRecord::Base
   acts_as_commentable roles: [:photos, :videos]
+end
+class User < ActiveRecord::Base
+  has_many :comments, -> { where(commenter_type: 'User') }, foreign_key: :commenter_id
 end
 
 user = User.find(1)
@@ -83,11 +89,13 @@ article.photos_comments.create(commenter: user, comment: 'Hello world!')
 article.photos_comments_count # => 1
 article.videos_comments_count # => 0
 article.comments_count # => 1
+user.comments_count # => 1
 
 article.videos_comments.create(commenter: user, comment: 'Hello world again!')
 article.photos_comments_count # => 1
 article.videos_comments_count # => 1
 article.comments_count # => 2
+user.comments_count # => 2
 ```
 
 ## License

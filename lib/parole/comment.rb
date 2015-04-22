@@ -24,19 +24,28 @@ module Parole
     # Update the commentable cache counter columns
     #
     # Look for a `<role>_comments_count` and a `comments_count` column
-    # in the commentable model and update their value with the count.
+    # in the commentable model and the commenter model and update their value with the count.
     def update_cache_counters
+      commenter_has_comments = commenter.respond_to?(:comments)
+
       role_method = :"#{self.role}_comments_count="
       if commentable.respond_to?(role_method)
         commentable.send role_method, commentable.comments.where(role: self.role).count
+      end
+      if commenter_has_comments && commenter.respond_to?(role_method)
+        commenter.send role_method, commenter.comments.where(role: self.role).count
       end
 
       total_method = :comments_count=
       if commentable.respond_to?(total_method)
         commentable.send total_method, commentable.comments.count
       end
+      if commenter_has_comments && commenter.respond_to?(total_method)
+        commenter.send total_method, commenter.comments.count
+      end
 
       commentable.save(validate: false)
+      commenter.save(validate: false)
     end
 
     # Make sure that the value of the `role` attribute is a valid role
