@@ -18,7 +18,7 @@ module ModelMacros
   # Create a new commenter model
   def spawn_commenter_model(klass_name = 'User', &block)
     spawn_model klass_name, ActiveRecord::Base do
-      has_many :comments unless block
+      acts_as_commenter unless block
       instance_exec(&block) if block
     end
   end

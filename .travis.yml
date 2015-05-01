@@ -1,11 +1,14 @@
 language: ruby
 
 rvm:
-  - 2.0.0
-  - 1.9.3
+  - 2.2.0
+
+sudo: false
 
 gemfile:
   - gemfiles/Gemfile.activerecord-4.0
+  - gemfiles/Gemfile.activerecord-4.1
+  - gemfiles/Gemfile.activerecord-4.2
 
 script: "echo 'DO IT' && bundle exec rake spec"
 

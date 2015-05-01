@@ -124,9 +124,7 @@ describe Parole::Comment do
     describe :update_cache_counters do
       before do
         spawn_comment_model
-        spawn_commenter_model 'User' do
-          has_many :comments, -> { where(commenter_type: 'User') }, foreign_key: :commenter_id
-        end
+        spawn_commenter_model 'User'
         spawn_commentable_model 'Article' do
           acts_as_commentable roles: [:photos, :videos]
         end
@@ -147,7 +145,7 @@ describe Parole::Comment do
 
       let(:commenter) { User.create }
       let(:commentable) { Article.create }
-      let(:create_comment!) { commentable.photos_comments.create(commenter: commenter, comment: 'Booya') }
+      let(:create_comment!) { commentable.photos_comments.create!(commenter: commenter, comment: 'Booya') }
 
       # Commentable cache counter
       it { expect { create_comment! }.to change { commentable.reload.photos_comments_count }.from(0).to(1) }

@@ -14,6 +14,7 @@ module Parole
       # Validations
       validate :ensure_valid_role_for_commentable, if: lambda { commentable.present? && commentable.commentable? }
       validate :ensure_valid_commentable
+      validate :ensure_valid_commenter
       validates :commenter, presence: true
       validates :commentable, presence: true
       validates :comment, presence: true
@@ -28,21 +29,15 @@ module Parole
     def update_cache_counters
       commenter_has_comments = commenter.respond_to?(:comments)
 
+      # Role-specific counter
       role_method = :"#{self.role}_comments_count="
-      if commentable.respond_to?(role_method)
-        commentable.send role_method, commentable.comments.where(role: self.role).count
-      end
-      if commenter_has_comments && commenter.respond_to?(role_method)
-        commenter.send role_method, commenter.comments.where(role: self.role).count
-      end
+      commentable.send role_method, commentable.comments.where(role: self.role).count if commentable.respond_to?(role_method)
+      commenter.send role_method, commenter.comments.where(role: self.role).count if commenter_has_comments && commenter.respond_to?(role_method)
 
+      # Global counter
       total_method = :comments_count=
-      if commentable.respond_to?(total_method)
-        commentable.send total_method, commentable.comments.count
-      end
-      if commenter_has_comments && commenter.respond_to?(total_method)
-        commenter.send total_method, commenter.comments.count
-      end
+      commentable.send total_method, commentable.comments.count if commentable.respond_to?(total_method)
+      commenter.send total_method, commenter.comments.count if commenter_has_comments && commenter.respond_to?(total_method)
 
       commentable.save(validate: false)
       commenter.save(validate: false)
@@ -67,6 +62,11 @@ module Parole
     # of a commentable model.
     def ensure_valid_commentable
       errors.add(:commentable, :invalid) unless commentable.respond_to?(:commentable?) && commentable.commentable?
+    end
+
+    # Make sure that the commenter record on is an instance of a commenter model.
+    def ensure_valid_commenter
+      errors.add(:commenter, :invalid) unless commenter.respond_to?(:commenter?) && commenter.commenter?
     end
   end
 end
