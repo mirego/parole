@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe Parole::Commentable do
   describe 'general `comments` relation' do
-    let(:relation_class) { ActiveRecord::Associations::CollectionProxy::ActiveRecord_Associations_CollectionProxy_Comment }
-
     context 'without defined roles' do
       before do
         spawn_comment_model
@@ -14,7 +12,7 @@ describe Parole::Commentable do
         end
       end
 
-      it { expect(Article.create.comments).to be_instance_of(ActiveRecord::Associations::CollectionProxy::ActiveRecord_Associations_CollectionProxy_Comment) }
+      it { expect(Article.create.comments).not_to be_loaded }
       it { expect(Article.create.comments.new.role).to be_blank }
     end
 
@@ -30,9 +28,10 @@ describe Parole::Commentable do
         end
       end
 
-      it { expect(Article.create.comments).to be_instance_of(relation_class) }
-      it { expect(Article.create.photos_comments).to be_instance_of(relation_class) }
-      it { expect(Article.create.videos_comments).to be_instance_of(relation_class) }
+      it { expect(Article.create.comments).not_to be_loaded }
+      it { expect(Article.create.photos_comments).not_to be_loaded }
+      it { expect(Article.create.videos_comments).not_to be_loaded }
+
       it { expect(Article.create.comments.new.role).to be_blank }
       it { expect(Article.create.photos_comments.new.role).to eql 'photos' }
       it { expect(Article.create.videos_comments.new.role).to eql 'videos' }
